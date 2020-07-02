@@ -4,6 +4,10 @@ import classes from './Burger.module.css';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
 const burger = (props) => { 
+    //.keys return the key of an object salad.. etc
+    // 'i' is the length of the value inside array
+    // igKey is the value inside array
+    // type of igKey has to be the same with the name of ingredients
     let transformedIngredients = Object.keys(props.ingredients)
         .map(igKey => {
             return [...Array(props.ingredients[igKey])].map((_, i) =>{
