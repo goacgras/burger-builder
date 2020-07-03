@@ -32,7 +32,7 @@ class BurgerBuilder extends Component {
     }
 
     updatePurchaseState(ingredients) {
-     
+        //Calculate ingredients value for orderStatus
         //ingredients[igKey] is the value / numbers on the object value (0,0,0,0)
         const sum = Object.keys(ingredients)
                     .map(igKey => { return ingredients[igKey] })
@@ -71,7 +71,7 @@ class BurgerBuilder extends Component {
         const priceDeduction = INGREDIENT_PRICES[type];
         const oldPrice = this.state.totalPrice;
         const newPrice = oldPrice - priceDeduction;
-        console.log(newPrice);
+
         this.setState({totalPrice: newPrice, ingredients: updatedIngredients });
 
         this.updatePurchaseState(updatedIngredients);
@@ -79,6 +79,10 @@ class BurgerBuilder extends Component {
 
     orderStatushandler = () =>{
         this.setState({orderStatus: true});
+    }
+
+    purchaseCancelOrder = () => {
+        this.setState({orderStatus: false});
     }
 
     render () {
@@ -90,7 +94,7 @@ class BurgerBuilder extends Component {
 
         return (
             <Aux>
-                <Modal show={this.state.orderStatus}>
+                <Modal show={this.state.orderStatus} bckdrpClick={this.purchaseCancelOrder}>
                     <OrderSummary ingredients={this.state.ingredients} />
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
