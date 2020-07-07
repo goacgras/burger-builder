@@ -12,25 +12,36 @@ const withErrorHandler = (WrappedComponent, axios) => {
         state = {
             error: null
         }
+        // constructor(props) {
+        //     super(props);
+        //     axios.interceptors.request.use(req => {
+        //         this.setState({ error: null });
+        //         return req;
+        //     });
+        //     axios.interceptors.response.use(res => res, err => {
+        //         this.setState({ error: err });
+        //     });
+        // }
 
-        componentDidMount() {
+        //for post request
+        UNSAFE_componentWillMount() {
             axios.interceptors.request.use(req => {
-                this.setState({error: null});
+                this.setState({ error: null });
                 return req;
             });
             axios.interceptors.response.use(res => res, err => {
-                this.setState({error: err});
+                this.setState({ error: err });
             });
         }
 
         errorConfirmedHandler = () => {
-            this.setState({error: null});
+            this.setState({ error: null });
         }
 
         render() {
             return (
                 <Aux>
-                    <Modal 
+                    <Modal
                         show={this.state.error}
                         bckdrpClick={this.errorConfirmedHandler}>
                         {this.state.error ? this.state.error.message : null}
