@@ -6,24 +6,28 @@ import ContactData from './ContactData/ContactData';
 
 class Checkout extends Component {
     state = {
-        ingredients: {
-            salad: 1,
-            bacon: 1,
-            cheese: 1,
-            meat: 1
-        }
+        ingredients: null,
+        totalPrice: 0
     }
 
-    componentDidMount(){
+    UNSAFE_componentWillMount() {
         console.log(this.props);
         const query = new URLSearchParams(this.props.location.search);
         const ingredientsFrmQuery = {};
-        for(let param of query.entries()){
+        let price = 0;
+
+        for (let param of query.entries()) {
             //["salad", "1"]...
-            ingredientsFrmQuery[param[0]] = +param[1];
+            //if params is price dont put it into ingredients
+            if (param[0] === 'price') {
+                price = +param[1];
+            } else {
+                ingredientsFrmQuery[param[0]] = +param[1];
+            }
+
         }
         console.log(ingredientsFrmQuery);
-        this.setState({ingredients: ingredientsFrmQuery});
+        this.setState({ ingredients: ingredientsFrmQuery, totalPrice: price });
     }
 
     checkoutCancelHandler = () => {
@@ -33,14 +37,19 @@ class Checkout extends Component {
     checkoutContinueHandler = () => {
         this.props.history.replace('/checkout/contact-data');
     }
-    render () {
+    render() {
         return (
             <div>
-                <CheckoutSummary 
+                <CheckoutSummary
                     ingredients={this.state.ingredients}
                     checkoutCancel={this.checkoutCancelHandler}
-                    checkoutContinue={this.checkoutContinueHandler}/>
-                <Route path={this.props.match.path + '/contact-data'} component={ContactData}/>                
+                    checkoutContinue={this.checkoutContinueHandler} />
+                <Route
+                    path={this.props.match.path + '/contact-data'}
+                    render={(props) => (<ContactData
+                        ingredients={this.state.ingredients}
+                        price={this.state.totalPrice.toFixed(2)}
+                        {...props} />)} />
             </div>
         );
     }
