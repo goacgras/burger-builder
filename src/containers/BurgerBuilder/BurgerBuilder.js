@@ -33,6 +33,7 @@ class BurgerBuilder extends Component {
     }
 
     componentDidMount() {
+        console.log(this.props)
         axios.get('https://react-burger-builder-678d8.firebaseio.com/ingredients.json')
             .then(res => {
                 this.setState({ ingredients: res.data });
@@ -97,31 +98,32 @@ class BurgerBuilder extends Component {
     }
 
     purchaseContinueOrder = () => {
-        this.setState({ loading: true });
+        // this.setState({ loading: true });
 
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice.toFixed(2),
-            customer: {
-                name: 'Fachreza Ghifary',
-                address: {
-                    street: 'test street no 1',
-                    zipCode: '123322',
-                    country: 'Indonesia'
-                },
-                email: 'testemail@test.com'
-            },
-            deliveryMethod: 'gojek'
-        }
-        axios.post('/orders.json', order)
-            .then(res => {
-                this.setState({ loading: false, orderStatus: false });
-            })
-            .catch(err => {
-                this.setState({ loading: false, orderStatus: false });
-            });
+        // const order = {
+        //     ingredients: this.state.ingredients,
+        //     price: this.state.totalPrice.toFixed(2),
+        //     customer: {
+        //         name: 'Fachreza Ghifary',
+        //         address: {
+        //             street: 'test street no 1',
+        //             zipCode: '123322',
+        //             country: 'Indonesia'
+        //         },
+        //         email: 'testemail@test.com'
+        //     },
+        //     deliveryMethod: 'gojek'
+        // }
+        // axios.post('/orders.json', order)
+        //     .then(res => {
+        //         this.setState({ loading: false, orderStatus: false });
+        //     })
+        //     .catch(err => {
+        //         this.setState({ loading: false, orderStatus: false });
+        //     });
 
         // alert('You will be recieving your order soon!');
+        this.props.history.push('/checkout');
     }
 
     render() {
