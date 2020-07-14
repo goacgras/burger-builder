@@ -1,9 +1,13 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom'
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import reducer from './store/reducer';
 
 // ReactDOM.render(
 //   <React.StrictMode>
@@ -12,10 +16,15 @@ import * as serviceWorker from './serviceWorker';
 //   document.getElementById('root')
 // );
 
+const store = createStore(reducer);
+
 const app = (
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
+    <Provider store={store}>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </Provider>
+
 );
 
 //Removing <React.StrictMode> Temporarily
