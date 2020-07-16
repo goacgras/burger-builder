@@ -112,19 +112,7 @@ class ContactData extends Component {
             price: this.props.price.toFixed(2),
             orderData: formData
         }
-        axios.post('/orders.json', order)
-            .then(res => {
-                this.setState({ loading: false });
-
-                //passing props while render at checkout for history to work
-                console.log(order);
-                this.props.history.push('/');
-            })
-            .catch(err => {
-                this.setState({ loading: false });
-            });
-
-        // alert('You will be recieving your order soon!');
+        
     }
 
     checkValidity(value, rules) {
