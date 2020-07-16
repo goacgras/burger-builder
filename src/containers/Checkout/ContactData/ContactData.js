@@ -113,6 +113,7 @@ class ContactData extends Component {
             price: this.props.price.toFixed(2),
             orderData: formData
         }
+        this.props.onOrderBurger(order);
 
     }
 
