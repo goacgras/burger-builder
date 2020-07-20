@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from './ContactData/ContactData';
 
+import * as orderActions from '../../store/actions/order';
+
 class Checkout extends Component {
     //getting query params
     // UNSAFE_componentWillMount() {
@@ -37,8 +39,10 @@ class Checkout extends Component {
     render() {
         let summary = <Redirect to="/" />
         if (this.props.ings) {
+            const purchaseRedirect = this.props.purchased ? <Redirect to="/" /> : null;
             summary = (
                 <div>
+                    {purchaseRedirect}
                     <CheckoutSummary
                         ingredients={this.props.ings}
                         checkoutCancel={this.checkoutCancelHandler}
@@ -55,7 +59,8 @@ class Checkout extends Component {
 
 const mapStateToProps = state => {
     return {
-        ings: state.ingredients,
+        ings: state.burgerBuilder.ingredients,
+        purchased: state.order.purchased
     };
 }
 
