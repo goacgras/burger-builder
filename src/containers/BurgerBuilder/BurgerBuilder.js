@@ -39,7 +39,12 @@ class BurgerBuilder extends Component {
     }
 
     orderStatushandler = () => {
-        this.setState({ orderStatus: true });
+        if (this.props.isAuthenticated) {
+            this.setState({ orderStatus: true });
+        } else {
+            this.props.history.push('/auth');
+        }
+
     }
 
     purchaseCancelOrder = () => {
@@ -47,7 +52,7 @@ class BurgerBuilder extends Component {
     }
 
     purchaseContinueOrder = () => {
-       
+
         // const queryParams = [];
         // for(let i in this.state.ingredients){
         //     queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
@@ -84,7 +89,8 @@ class BurgerBuilder extends Component {
                         disabled={disableInfo}
                         purchaseable={this.updatePurchaseState(this.props.ings)}
                         orderStatus={this.orderStatushandler}
-                        price={this.props.price} />
+                        price={this.props.price}
+                        isAuth={this.props.isAuthenticated} />
                 </Aux>
             );
             orderSummary = <OrderSummary
@@ -93,7 +99,7 @@ class BurgerBuilder extends Component {
                 continueOrder={this.purchaseContinueOrder}
                 totalPrice={this.props.price} />
         }
-        
+
         return (
             <Aux>
                 <Modal show={this.state.orderStatus} bckdrpClick={this.purchaseCancelOrder}>
@@ -109,7 +115,8 @@ const mapStateToProps = state => {
     return {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        error: state.burgerBuilder.error
+        error: state.burgerBuilder.error,
+        isAuthenticated: state.auth.token !== null
     };
 }
 const mapDispatchToProps = dispatch => {
