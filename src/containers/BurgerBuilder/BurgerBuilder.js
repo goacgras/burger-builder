@@ -13,9 +13,9 @@ import * as actions from '../../store/actions/index';
 import axios from '../../axios-order';
 
 
-class BurgerBuilder extends Component {
+class BurgerBuilder extends Component { 
     // constructor(props) {
-    //     super(props);
+    //     super(props);  
     //     this.state = {...}
     // }
 
@@ -42,6 +42,8 @@ class BurgerBuilder extends Component {
         if (this.props.isAuthenticated) {
             this.setState({ orderStatus: true });
         } else {
+            //holding path to checkout
+            this.props.onSetAuthRedirectPath('/checkout');
             this.props.history.push('/auth');
         }
 
@@ -125,7 +127,8 @@ const mapDispatchToProps = dispatch => {
         onAddIngredient: (ingName) => dispatch(actions.addIngredient(ingName)),
         onRemoveIngredient: (ingName) => dispatch(actions.removeIngredient(ingName)),
         onInitIngredients: () => dispatch(actions.initIngredients()),
-        onInitPurchase: () => dispatch(actions.purchaseInit())
+        onInitPurchase: () => dispatch(actions.purchaseInit()),
+        onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path))
     };
 }
 
