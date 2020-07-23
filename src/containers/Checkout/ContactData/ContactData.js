@@ -7,6 +7,7 @@ import Spinner from '../../../components/UI/Spinner/Spinner'
 import Input from '../../../components/UI/Input/Input';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorhandler';
 import * as orderActions from '../../../store/actions/index';
+import { updateObject } from '../../../shared/utility';
 
 import classes from './ContactData.module.css';
 
@@ -138,23 +139,17 @@ class ContactData extends Component {
     }
 
     inputChangedHandler = (event, inputIdentifier) => {
-        //copy(name, street, zipcode ...)
-        const updatedOrderForm = {
-            ...this.state.orderForm
-        };
-        //copy inside ( elementType, elementConfig, value)
-        const updatedFormElement = {
-            ...updatedOrderForm[inputIdentifier]
-        };
-        //change the value
-        updatedFormElement.value = event.target.value;
-        //if validation is required, checkValidity
-        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-        //check if input has been touch
-        updatedFormElement.touched = true;
-        //change the value
-        updatedOrderForm[inputIdentifier] = updatedFormElement;
 
+        //copy inside ( elementType, elementConfig, value)
+        const updatedFormElement = updateObject(this.state.orderForm[inputIdentifier], {
+            value: event.target.value,
+            valid: this.checkValidity(event.target.value, this.state.validation),
+            touched: true
+        });
+        //copy(name, street, zipcode ...)
+        const updatedOrderForm = updateObject(this.state.orderForm, {
+            [inputIdentifier]: updatedFormElement
+        });
         // console.log(updatedFormElement.value);
         //checking if updatedOrderForm is valid and formIsValid is true
         let formIsValid = true;
