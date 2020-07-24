@@ -77,7 +77,8 @@ class ContactData extends Component {
                 },
                 value: '',
                 validation: {
-                    required: true
+                    required: true,
+                    isEmail: true
                 },
                 valid: false,
                 touched: false
@@ -107,7 +108,7 @@ class ContactData extends Component {
             formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
         }
 
-        console.log(this.props.price)
+        // console.log(this.props.price)
         const order = {
             ingredients: this.props.ings,
             price: this.props.price.toFixed(2),
@@ -123,7 +124,7 @@ class ContactData extends Component {
         //copy inside ( elementType, elementConfig, value)
         const updatedFormElement = updateObject(this.state.orderForm[inputIdentifier], {
             value: event.target.value,
-            valid: checkValidity(event.target.value, this.state.validation),
+            valid: checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
             touched: true
         });
         //copy(name, street, zipcode ...)
