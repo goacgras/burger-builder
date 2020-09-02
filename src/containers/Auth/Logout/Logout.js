@@ -5,7 +5,6 @@ import { Redirect } from 'react-router-dom';
 import * as actions from '../../../store/actions/index';
 
 const Logout = props => {
-
     const { onLogout } = props;
 
     //awal masuk
