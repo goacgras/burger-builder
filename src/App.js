@@ -33,7 +33,7 @@ const App = props => {
       <Redirect to="/" />
     </Switch>
   );
-
+      
   if (props.isAuthenticated) {
     routes = (
       <Switch>
