@@ -23,7 +23,6 @@ const App = props => {
   const { onTryAutoSignup } = props; 
   useEffect(() => {
     onTryAutoSignup();
-    console.log('this is useEffect');
   }, [onTryAutoSignup]);
 
   let routes = (

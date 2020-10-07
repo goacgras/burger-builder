@@ -52,7 +52,6 @@ const Auth = props => {
         if (!buildingBurger && authRedirectPath !== '/') {
             onSetAuthRedirectPath();
         }
-        console.log('auth useEffect');
     }, [onSetAuthRedirectPath, authRedirectPath, buildingBurger]);
 
     const inputChangedHandler = (event, controlName) => {
