@@ -10,7 +10,6 @@ import * as orderActions from '../../../store/actions/index';
 import { updateObject, checkValidity } from '../../../shared/utility';
 
 import classes from './ContactData.module.css';
-
 const ContactData = props => {
     const [orderForm, setOrderForm] = useState({
         name: {
